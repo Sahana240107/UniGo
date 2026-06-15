@@ -11,6 +11,8 @@
     "build:web": "npm --workspace apps/web run build",
     "lint:web": "npm --workspace apps/web run lint",
     "typecheck:web": "npm --workspace apps/web run typecheck"
+  },
+  "dependencies": {
+    "firebase": "^12.14.0"
   }
 }
-
