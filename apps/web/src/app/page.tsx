@@ -1,26 +1,50 @@
-import Link from "next/link";
+'use client';
 
-export default function HomePage() {
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/context/AuthContext';
+
+/**
+ * Root page — smart redirect based on session state.
+ *
+ * Rider  (user + no driverProfile + at least 1 community) → /pulse (dashboard)
+ * Rider  (user + no driverProfile + no communities)        → /community
+ * Driver (user + driverProfile active)                     → /driver/dashboard
+ * Driver (user + driverProfile pending/action)             → /driver/pending
+ * No session                                               → /login
+ */
+export default function RootPage() {
+  const router = useRouter();
+  const { user, communities, driverProfile, isLoading } = useAuth();
+
+  useEffect(() => {
+    if (isLoading) return;
+
+    if (!user) {
+      router.replace('/login');
+      return;
+    }
+
+    if (driverProfile) {
+      if (driverProfile.submission_state === 'active') {
+        router.replace('/driver/dashboard');
+      } else {
+        router.replace('/driver/pending');
+      }
+      return;
+    }
+
+    // Rider path
+    if (communities && communities.length > 0) {
+      router.replace('/pulse');
+    } else {
+      router.replace('/community');
+    }
+  }, [isLoading, user, communities, driverProfile, router]);
+
   return (
-    <main className="min-h-screen bg-[#f8fafc] px-6 py-8">
-      <section className="mx-auto flex max-w-5xl flex-col gap-6">
-        <div>
-          <p className="text-sm font-medium text-[#534ab7]">UniGo Web</p>
-          <h1 className="mt-2 text-3xl font-semibold tracking-normal text-gray-950 sm:text-5xl">
-            Daily commute groups for safer shared rides.
-          </h1>
-          <p className="mt-3 max-w-2xl text-base text-gray-600">
-            A responsive hackathon build for daily pulse check-ins, ride
-            creation, route matching, and women-only commute options.
-          </p>
-        </div>
-        <Link
-          href="/commute"
-          className="inline-flex w-fit items-center rounded-md bg-[#7f77dd] px-4 py-2 text-sm font-medium text-white shadow-sm"
-        >
-          Open commute flow
-        </Link>
-      </section>
-    </main>
+    <div className="min-h-screen bg-[#F8F7FF] flex items-center justify-center">
+      <div className="w-6 h-6 border-2 border-[#6C63FF] border-t-transparent rounded-full animate-spin" />
+    </div>
   );
 }

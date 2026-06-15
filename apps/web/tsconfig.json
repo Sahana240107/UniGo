@@ -37,7 +37,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
-  ],
+, "src/app/community/invitecode/page.tsx"  ],
   "exclude": [
     "node_modules"
   ]
