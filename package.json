@@ -13,6 +13,6 @@
     "typecheck:web": "npm --workspace apps/web run typecheck"
   },
   "dependencies": {
-    "firebase": "^10.12.0",
+    "firebase": "^10.12.0"
   }
 }
