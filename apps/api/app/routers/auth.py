@@ -212,6 +212,9 @@ def rider_send_email_verification(body: RiderSendEmailRequest):
         send_rider_email_verification_link(body.email)
         return {"ok": True}
     except Exception as e:
+        import traceback
+        print(f"[ERROR] send-email-verification failed: {e}")
+        print(traceback.format_exc())
         raise HTTPException(status_code=500, detail=f"Failed to send email: {e}")
 
 
