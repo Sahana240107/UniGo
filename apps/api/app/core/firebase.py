@@ -200,28 +200,37 @@ def mark_email_verified(uid: str) -> None:
 
 
 def _send_email_via_provider(email: str, link: str, subject: str, button_text: str) -> None:
-    RESEND_API_KEY = os.environ["RESEND_API_KEY"]
+    """Send via Brevo (formerly Sendinblue) — HTTPS, works on Render free tier, sends to anyone."""
+    BREVO_API_KEY = os.environ["BREVO_API_KEY"]
+    BREVO_SENDER_EMAIL = os.environ.get("BREVO_SENDER_EMAIL", "noreply@unigo.app")
+    BREVO_SENDER_NAME = os.environ.get("BREVO_SENDER_NAME", "UniGo")
+    html_body = (
+        f'<div style="font-family:sans-serif;max-width:480px;margin:0 auto;padding:32px 24px;">'
+        f'<h2 style="color:#6C63FF;">UniGo</h2>'
+        f'<h3>{subject}</h3>'
+        f'<p style="color:#555;">Tap the button below to continue.</p>'
+        f'<a href="{link}" style="display:inline-block;background:#6C63FF;color:#fff;'
+        f'padding:14px 28px;border-radius:10px;text-decoration:none;font-weight:700;margin:16px 0;">'
+        f'{button_text}</a>'
+        f'<p style="color:#888;font-size:13px;margin-top:24px;">If you didn\'t request this, ignore this email.</p>'
+        f'</div>'
+    )
     resp = httpx.post(
-        "https://api.resend.com/emails",
-        headers={"Authorization": f"Bearer {RESEND_API_KEY}"},
+        "https://api.brevo.com/v3/smtp/email",
+        headers={
+            "api-key": BREVO_API_KEY,
+            "Content-Type": "application/json",
+        },
         json={
-            "from": "UniGo <onboarding@resend.dev>",
-            "to": email,
+            "sender": {"name": BREVO_SENDER_NAME, "email": BREVO_SENDER_EMAIL},
+            "to": [{"email": email}],
             "subject": subject,
-            "html": (
-                f'<div style="font-family:sans-serif;padding:24px;">'
-                f'<h2>{subject}</h2>'
-                f'<p>Tap the button below to continue.</p>'
-                f'<a href="{link}" style="display:inline-block;background:#4F46E5;color:#fff;'
-                f'padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;">'
-                f'{button_text}</a>'
-                f'</div>'
-            ),
+            "htmlContent": html_body,
         },
         timeout=10,
     )
-    print(f"[DEBUG] Resend status: {resp.status_code}")
-    print(f"[DEBUG] Resend response: {resp.text}")
+    print(f"[DEBUG] Brevo status: {resp.status_code}")
+    print(f"[DEBUG] Brevo response: {resp.text}")
     resp.raise_for_status()
 
 # ─── Admin email + password ───────────────────────────────────────────────────
