@@ -2,7 +2,6 @@
 
 UniGo is being rebuilt as a responsive web app for daily commute groups, ride creation, matching, women-only ride discovery, route previews, and live rider updates.
 
-
 ## Stack
 
 - Frontend: Next.js, TypeScript, Tailwind CSS, shadcn/ui, Leaflet
@@ -40,6 +39,7 @@ python -m venv .venv
 pip install -r requirements.txt
 uvicorn app.main:app --reload
 ```
+
 
 Copy `.env.example` files before running either app.
 
