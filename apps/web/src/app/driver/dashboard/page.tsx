@@ -65,9 +65,8 @@ function DriverDashboardContent() {
     setActionLoading(reqId);
     try {
       const res = await fetch(`${API_BASE}/rides/${rideId}/request/${reqId}`, {
-      headers: authHeaders(),
         method: "PATCH",
-        headers: { "Content-Type": "application/json" },
+       headers: { ...authHeaders(), "Content-Type": "application/json" },
         body: JSON.stringify({ status }),
       });
       if (!res.ok) throw new Error("Action failed");
