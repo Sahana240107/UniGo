@@ -20,8 +20,8 @@ declare global {
     L: any;
   }
 }
-
 type LatLngTuple = [number, number];
+export type MapPoint = [number, number];
 
 interface FreeRouteMapProps {
   route: LatLngTuple[];
