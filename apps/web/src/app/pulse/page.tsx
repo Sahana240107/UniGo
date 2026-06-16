@@ -433,11 +433,10 @@ export default function PulsePage() {
               )}
             </div>
           )}
-
           {/* ── Quick stats ─────────────────────────────────────── */}
           <div
             className="mb-4 grid grid-cols-3 divide-x rounded-2xl bg-white py-4"
-            style={{ border: "0.5px solid #E5E5E0", divideColor: "#E5E5E0" }}
+            style={{ border: "0.5px solid #E5E5E0" }}
           >
             <div className="text-center px-2">
               <p className="text-lg font-semibold" style={{ color: "#185FA5" }}>{quickStats.ridesShared}</p>
