@@ -11,7 +11,6 @@ function authHeaders(): Record<string, string> {
   const token = getToken();
   return token ? { "Authorization": `Bearer ${token}`, "Content-Type": "application/json" } : { "Content-Type": "application/json" };
 }
-
 type RideRequest = {
   id: string;
   rider_name: string;
