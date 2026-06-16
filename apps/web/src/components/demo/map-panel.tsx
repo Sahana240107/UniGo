@@ -1,8 +1,6 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import type { MapPoint } from "@/components/maps/free-route-map";
-
 const FreeRouteMap = dynamic(
   () => import("@/components/maps/free-route-map").then((mod) => mod.FreeRouteMap),
   {
