@@ -12,10 +12,12 @@ from app.core.config import settings
 from app.routers import auth, community, emergency, rides
 
 app = FastAPI(title="UniGo API", version="0.1.0")
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[settings.frontend_origin],
+    allow_origins=[
+        "http://localhost:3000",
+        "https://uni-go-web.vercel.app",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
