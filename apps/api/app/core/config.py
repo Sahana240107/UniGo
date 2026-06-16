@@ -12,7 +12,7 @@ FIREBASE_CREDENTIALS_JSON = os.environ.get("FIREBASE_CREDENTIALS_JSON")
 
 class Settings(BaseSettings):
     app_env: str = "local"
-    frontend_origin: str = "http://localhost:3000"
+    frontend_origin: str = "https://uni-go-web.vercel.app"
     supabase_url: str = ""
     supabase_service_role_key: str = ""
     supabase_db_url: str = ""
