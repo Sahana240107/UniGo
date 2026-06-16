@@ -1,7 +1,16 @@
 "use client";
 
 import dynamic from "next/dynamic";
+
 type MapPoint = [number, number];
+
+const FreeRouteMap = dynamic(
+  () => import("@/components/maps/free-route-map").then((mod) => mod.FreeRouteMap),
+  {
+    ssr: false,
+    loading: () => <div className="h-full w-full bg-[#e8f4f8]" />
+  }
+);
 
 const defaultRoute: MapPoint[] = [
   [10.7597, 78.8132],
@@ -48,4 +57,3 @@ export function MapPanel({
     </div>
   );
 }
-
